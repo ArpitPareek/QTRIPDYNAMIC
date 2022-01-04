@@ -39,19 +39,17 @@ footer {
 
 .content {
   padding: 100px 0px;
-  margin: 0px 50px;
-   display: flex; 
-   flex-wrap: wrap;
-   align-items: center;  
+  /* display: flex;
+  flex-wrap: wrap; */
 }
 .tile {
   position: relative;
   height: 100%;
-  /* width: calc(25% - 20px);   */
-  padding: 6px;
+  /* width: calc(25% - 20px); */
+  /* padding: 6px; */
   border-radius: 8px;
   cursor: pointer;
-  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
   overflow: hidden;
 
   display: flex;
@@ -63,27 +61,23 @@ footer {
   width: 100%;
   height: 100%;
   border-radius: 8px;
-  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+  margin-bottom: 1.5rem;
+  /*margin: 0.65rem;*/
   /* -webkit-filter: brightness(70%); */
 }
 .tile img:hover {
-  -webkit-filter: brightness(50%);
+  filter: brightness(50%);
   transform: scale(1.1);
 }
 
 .tile-text {
   position: absolute;
   z-index: 1;
+  text-align: center;
   text-transform: uppercase;
   letter-spacing: 2px;
-  margin: 2rem;
-}
-.tile-text2 {
-  position: absolute;
-  z-index: 1;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-size: 1rem;
+  padding-bottom: 1.25rem;
 }
 .hero-image {
   /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
@@ -127,7 +121,7 @@ footer {
   border: 1px solid #ddd;
   border-radius: 8px;
   cursor: pointer;
-  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
   overflow: hidden;
 
   display: flex;
@@ -139,11 +133,11 @@ footer {
   width: 100%;
   height: 100%;
   /* border-radius: 8px; */
-  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
   /* -webkit-filter: brightness(70%); */
 }
 .activity-card img:hover {
-  -webkit-filter: brightness(50%);
+  filter: brightness(50%);
   /* transform: scale(1.1); */
 }
 
@@ -160,11 +154,11 @@ footer {
   height: 500px;
   width: 100%;
   cursor: pointer;
-  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
   border-radius: 2px;
 }
 .activity-card-image:hover {
-  -webkit-filter: brightness(50%);
+  filter: brightness(50%);
 }
 .experience-content ul li {
   margin-left: 16px;
@@ -187,6 +181,7 @@ footer {
   padding: 5px 20px;
   margin: 10px 10px 10px 0px;
 }
+
 .category-banner {
   position: absolute;
   /* height: 50px; */
