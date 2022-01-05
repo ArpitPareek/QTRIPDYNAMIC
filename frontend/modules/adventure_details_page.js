@@ -119,132 +119,46 @@ function captureFormSubmit(adventure) {
   // TODO: MODULE_RESERVATIONS
   // 1. Capture the query details and make a POST API call using fetch() to make the reservation
   // 2. If the reservation is successful, show an alert with "Success!" and refresh the page. If the reservation fails, just show an alert with "Failed!".
- 
- 
-  
+  let form = document.getElementById("myForm");
 
-  // var serialize = function (form) {
-  //   var field,
-  //     l,
-  //     s = [];
-  
-  //   if (typeof form == 'object' && form.nodeName == "FORM") {
-  //     var len = form.elements.length;
-  
-  //     for (var i = 0; i < len; i++) {
-  //       field = form.elements[i];
-  //       if (field.name && !field.disabled && field.type != 'button' && field.type != 'file' && field.type != 'hidden' && field.type != 'reset' && field.type != 'submit') {
-  //         if (field.type == 'select-multiple') {
-  //           l = form.elements[i].options.length;
-  
-  //           for (var j = 0; j < l; j++) {
-  //             if (field.options[j].selected) {
-  //               s[s.length] = encodeURIComponent(field.name) + "=" + encodeURIComponent(field.options[j].value);
-  //             }
-  //           }
-  //         }
-  //         else if ((field.type != 'checkbox' && field.type != 'radio') || field.checked) {
-  //           s[s.length] = encodeURIComponent(field.name) + "=" + encodeURIComponent(field.value);
-  //         }
-  //       }
-  //     }
-  //   }
-  //   return s.join('&').replace(/%20/g, '+');
-  // };
-  
- 
-    // var data = serialize(form)+ "&adventure=" + adventure.id;
-    // //data.adventure = adventure.id;
+  form.addEventListener("submit",function(event){
+    event.preventDefault();
 
-    // var formData = new FormData(data);
-    // // formData.append("name",data.name.toString())
-    // // formData.append("date",data.date.toString())
-    // // formData.append("person",data.person.toString())
-    // // formData.append("adventure",data.adventure.toString())
-    
-    // console.log(typeof formData.get("name"))
-    // let url = config.backendEndpoint + "/reservations/new";
-    // fetch(url,{
-    //   method:'POST',
-    //   body:formData,
-    // })
-    // .then((res)=>alert("Success"))
-    // .then((res)=>window.location.reload())
-    // .then((res)=>console.log(res))
-  //   // .catch((err)=>alert("Failed"));
-  // });
+    let totalCost = document.getElementById('reservation-cost').innerText;
+    let persons = totalCost/adventure.costPerHead;
+    let name= form.elements.namedItem("name").value;
+    let date = form.elements.namedItem("date").value;
+    let url = config.backendEndpoint+"/reservations/new";
+    const formData = {
+      name:name,
+      date:date,
+      person:persons,
+      adventure:adventure.id,
+    }
+    const options = {
+      method:"POST",
+      headers:{
+        'Content-Type':'application/json',
+      },
+      body:JSON.stringify(formData),
+    }
 
-  // $("#myForm").on("submit",function (event) {
-  //   //prevent Default functionality
-  //   event.preventDefault();
-  //   var data = $(this).serialize() + "&adventure=" + adventure.id;
-  //   let url = config.backendEndpoint + "/reservations/new";
-  //   console.log(typeof data.adventure)
-  //   $.ajax({
-  //     url: url,
-  //     type: "POST",
-  //     data: data,
-  //     success: function (response) {
-  //       console.log(response);
-  //       alert("Success!");
-  //       window.location.reload();
-  //     },
-  //     error: function () {
-  //       alert("Failed!");
-  //     },
-  //   });
-  // });
-
-  function serialize(form) {
-    return Array.from(new FormData(form)
-      .entries())
-      .reduce(function (response, current) {
-        response[current[0]] = current[1];
-        return response
-      }, {})
-  };
-
-  var form = document.getElementById("myForm");
-  
-  form.addEventListener("submit",function(e){
-    e.preventDefault();
-    var data = serialize(form)
-    data.adventure = adventure.id;
-      
-  let url = config.backendEndpoint + "/reservations/new";
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      "Accept": "application/json",
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: new URLSearchParams(data),
-}).then((res)=>alert("Success!"))
-.then((res)=>window.location.reload())
-.catch((err)=>alert("Failed!"));
+    fetch(url,options)
+  .then(data =>{
+    if(!data.ok){
+      throw Error(data);
+    }
+    return data.json();
   })
-  
-
-// using jquery
-  // $("#myForm").on("submit", function (e) {
-  //   //prevent Default functionality
-  //   e.preventDefault();
-  //   var data = $(this).serialize() + "&adventure=" + adventure.id;
-  //   let url = config.backendEndpoint + "/reservations/new";
-  //   $.ajax({
-  //     url: url,
-  //     type: "POST",
-  //     data: data,
-  //     success: function (response) {
-  //       alert("Success!");
-  //       window.location.reload();
-  //     },
-  //     error: function (xhr, textStatus, errorThrown) {
-  //       console.log(xhr, textStatus, errorThrown);
-  //       alert("Failed!");
-  //     },
-  //   });
-  // });
+  .then(update =>{
+    alert("Success!");
+    console.log(update);
+    location.reload();
+  })
+  .catch(e =>{
+    console.log(JSON.stringify(e));
+  })
+  })
 }
 
 //Implementation of success banner after reservation

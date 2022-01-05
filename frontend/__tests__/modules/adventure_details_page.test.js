@@ -265,14 +265,14 @@ describe("Adventure Detail Page Tests", function () {
     expect(JSON.stringify(fetch.mock.calls[0][1].headers)).toEqual(
       expect.stringContaining("application/json")
     );
-    // Test if body contains the required fields
-    // expect(JSON.parse(fetch.mock.calls[0][1].body)).toHaveProperty("name");
-    // expect(JSON.parse(fetch.mock.calls[0][1].body)).toHaveProperty("date");
-    // expect(JSON.parse(fetch.mock.calls[0][1].body)).toHaveProperty("person");
-    // expect(JSON.parse(fetch.mock.calls[0][1].body)).toHaveProperty(
-    //   "adventure",
-    //   adventure.id
-    // );
+    //Test if body contains the required fields
+    expect(JSON.parse(fetch.mock.calls[0][1].body)).toHaveProperty("name");
+    expect(JSON.parse(fetch.mock.calls[0][1].body)).toHaveProperty("date");
+    expect(JSON.parse(fetch.mock.calls[0][1].body)).toHaveProperty("person");
+    expect(JSON.parse(fetch.mock.calls[0][1].body)).toHaveProperty(
+      "adventure",
+      adventure.id
+    );
 
   });
 });
