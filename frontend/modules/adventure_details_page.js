@@ -121,7 +121,7 @@ function captureFormSubmit(adventure) {
   // 2. If the reservation is successful, show an alert with "Success!" and refresh the page. If the reservation fails, just show an alert with "Failed!".
  
  
-  // var form = document.getElementById("myForm");
+  
 
   // var serialize = function (form) {
   //   var field,
@@ -151,16 +151,7 @@ function captureFormSubmit(adventure) {
   //   }
   //   return s.join('&').replace(/%20/g, '+');
   // };
-
-  // var serialize = function (form) {
-  //   	return Array.from(new FormData(form)
-  //   		.entries())
-  //   		.reduce(function (response, current) {
-  //   			response[current[0]] = current[1];
-  //   			return response
-  //   		}, {})
-  //   };
-
+  
  
     // var data = serialize(form)+ "&adventure=" + adventure.id;
     // //data.adventure = adventure.id;
@@ -204,27 +195,56 @@ function captureFormSubmit(adventure) {
   //   });
   // });
 
+  function serialize(form) {
+    return Array.from(new FormData(form)
+      .entries())
+      .reduce(function (response, current) {
+        response[current[0]] = current[1];
+        return response
+      }, {})
+  };
 
-
-  $("#myForm").on("submit", function (e) {
-    //prevent Default functionality
+  var form = document.getElementById("myForm");
+  
+  form.addEventListener("submit",function(e){
     e.preventDefault();
-    var data = $(this).serialize() + "&adventure=" + adventure.id;
-    let url = config.backendEndpoint + "/reservations/new";
-    $.ajax({
-      url: url,
-      type: "POST",
-      data: data,
-      success: function (response) {
-        alert("Success!");
-        window.location.reload();
-      },
-      error: function (xhr, textStatus, errorThrown) {
-        console.log(xhr, textStatus, errorThrown);
-        alert("Failed!");
-      },
-    });
-  });
+    var data = serialize(form)
+    data.adventure = adventure.id;
+      
+  let url = config.backendEndpoint + "/reservations/new";
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      "Accept": "application/json",
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: new URLSearchParams(data),
+}).then((res)=>alert("Success!"))
+.then((res)=>window.location.reload())
+.catch((err)=>alert("Failed!"));
+  })
+  
+
+// using jquery
+  // $("#myForm").on("submit", function (e) {
+  //   //prevent Default functionality
+  //   e.preventDefault();
+  //   var data = $(this).serialize() + "&adventure=" + adventure.id;
+  //   let url = config.backendEndpoint + "/reservations/new";
+  //   $.ajax({
+  //     url: url,
+  //     type: "POST",
+  //     data: data,
+  //     success: function (response) {
+  //       alert("Success!");
+  //       window.location.reload();
+  //     },
+  //     error: function (xhr, textStatus, errorThrown) {
+  //       console.log(xhr, textStatus, errorThrown);
+  //       alert("Failed!");
+  //     },
+  //   });
+  // });
 }
 
 //Implementation of success banner after reservation
