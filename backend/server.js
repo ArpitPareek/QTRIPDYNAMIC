@@ -1,4 +1,3 @@
-
 const express = require("express");
 const cors = require("cors");
 const lowDb = require("lowdb");
@@ -32,7 +31,7 @@ The response is an [array] of cities with each having the following structure :
 }
 Data is sourced from "cities" array in db.json file
 */
-app.get("/cities", (req, res) => {
+app.get("cities", (req, res) => {
   const data = db.get("cities").value();
   return res.json(data);
 });
